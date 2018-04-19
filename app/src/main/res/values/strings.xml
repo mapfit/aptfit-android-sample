@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Aptfit</string>
+    <string name="sample_apt_finder">Sample Apartment Finder</string>
+    <string name="select_a_neighborhood">Select a neighborhood</string>
+
+    <string name="start_building">Start building with this template</string>
+    <string name="made_with_love">Made with ❤️ by the Mapfit team.</string>
+    <string name="list_view">List View</string>
+    <string name="map_view">Map View</string>
+
+    <string name="bedroom_count">%1$d BD</string>
+    <string name="bathroom_count">%1$d BA</string>
+    <string name="apt_area">%1$d SF</string>
+    <string name="neighborhood">Neighborhood</string>
+    <string name="available">Available: %1$s</string>
+</resources>
