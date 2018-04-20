@@ -29,6 +29,7 @@ import com.mapfit.realestate.ui.widget.PriceMarkerBitmapDrawable
 import com.mapfit.realestate.util.openProjectPage
 import kotlinx.android.synthetic.main.fragment_map.*
 import kotlinx.coroutines.experimental.Job
+import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.delay
 import kotlinx.coroutines.experimental.launch
 
@@ -237,6 +238,7 @@ class MapFragment : Fragment() {
 
     private fun onNeighborhoodSelected(neighborhood: Neighborhood) {
         realEstateAdapter.replaceItems(neighborhood.realEstates)
+        recyclerView.visibility = View.GONE
 
         val selectedPolygon = neighborhoodHashMap[neighborhood]
 
@@ -249,13 +251,17 @@ class MapFragment : Fragment() {
                     neighborhoodHashMap[neighborhood]?.let {
                         setLatLngBounds(it.getLatLngBounds(), 0.8f)
                     }
-
-//                    setZoom(15f, 300)
                 }
 
+                removePreviousRealEstates()
                 addRealEstatesToMap(neighborhood.realEstates)
                 selectedNeighborhood = neighborhood
             }
+    }
+
+    private fun removePreviousRealEstates() {
+        realEstateHashMap.forEach { _, marker -> marker.remove() }
+        realEstateHashMap.clear()
     }
 
     @SuppressLint("ResourceType")
@@ -291,7 +297,7 @@ class MapFragment : Fragment() {
 
                 realEstateHashMap[realEstate] = marker
 
-                launch {
+                launch (UI){
                     marker.setIcon(
                         PriceMarkerBitmapDrawable(
                             getContext()!!,
@@ -300,11 +306,11 @@ class MapFragment : Fragment() {
                         )
                     )
 
-                    delay(200)
                     marker.markerOptions.apply {
                         width = 84
                         height = 48
                     }
+
                     marker.buildingPolygon?.let { changePolygonState(it, false) }
                 }
             }
