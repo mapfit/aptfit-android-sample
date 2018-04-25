@@ -61,6 +61,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginStart="17dp"
             android:layout_marginTop="16dp"
+            android:fontFamily="@font/harmonia_semibd"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -68,13 +69,14 @@
             tools:text="180 West 20th Street, Unit 2C" />
 
         <TextView
-            android:id="@+id/txtAvailability"
+            android:id="@+id/txtNeighborhood"
             style="@style/TextAppearance.AppCompat.Title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
+            android:fontFamily="@font/harmonia_semibd"
             android:textColor="@color/txtColorSecondary"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -82,62 +84,14 @@
             app:layout_constraintTop_toBottomOf="@+id/txtAddress"
             tools:text="Chelsea, Manhattan" />
 
-        <TextView
-            android:id="@+id/txtBed"
-            style="@style/TextAppearance.AppCompat.Body2"
+
+        <include
+            layout="@layout/widget_apt_attributes"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtAvailability"
-            tools:text="1 BD" />
-
-        <View
-            android:id="@+id/divider1"
-            android:layout_width="1dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:background="#c2c2c2"
-            app:layout_constraintBottom_toBottomOf="@+id/txtBed"
-            app:layout_constraintStart_toEndOf="@+id/txtBed"
-            app:layout_constraintTop_toTopOf="@+id/txtBed" />
-
-        <TextView
-            android:id="@+id/txtBath"
-            style="@style/TextAppearance.AppCompat.Body2"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="@+id/divider1"
-            app:layout_constraintTop_toBottomOf="@+id/txtAvailability"
-            tools:text="1 BA" />
-
-        <View
-            android:id="@+id/divider2"
-            android:layout_width="1dp"
-            android:layout_height="0dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:background="#c2c2c2"
-            app:layout_constraintBottom_toBottomOf="@+id/txtBath"
-            app:layout_constraintStart_toEndOf="@+id/txtBath"
-            app:layout_constraintTop_toTopOf="@+id/txtBath" />
-
-        <TextView
-            android:id="@+id/txtArea"
-            style="@style/TextAppearance.AppCompat.Body2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="@+id/divider2"
-            app:layout_constraintTop_toBottomOf="@+id/txtAvailability"
-            tools:text="700 SF" />
+            app:layout_constraintStart_toStartOf="@+id/txtNeighborhood"
+            app:layout_constraintTop_toBottomOf="@+id/txtNeighborhood" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

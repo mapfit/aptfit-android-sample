@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/txtBed"
+        style="@style/TextAppearance.AppCompat.Body2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/harmonia_regular"
+        app:layout_constraintEnd_toStartOf="@+id/divider1"
+        tools:text="1 BD" />
+
+    <View
+        android:id="@+id/divider1"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:background="#c2c2c2"
+        app:layout_constraintBottom_toBottomOf="@+id/txtBed"
+        app:layout_constraintEnd_toStartOf="@+id/txtBath"
+        app:layout_constraintTop_toTopOf="@+id/txtBed" />
+
+    <TextView
+        android:id="@+id/txtBath"
+        style="@style/TextAppearance.AppCompat.Body2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/harmonia_regular"
+        app:layout_constraintEnd_toStartOf="@+id/divider2"
+        tools:text="1 BA" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:background="#c2c2c2"
+        app:layout_constraintBottom_toBottomOf="@+id/txtBath"
+        app:layout_constraintEnd_toStartOf="@+id/txtArea"
+        app:layout_constraintTop_toTopOf="@+id/txtBath" />
+
+    <TextView
+        android:id="@+id/txtArea"
+        style="@style/TextAppearance.AppCompat.Body2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/harmonia_regular"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="700 SF" />
+
+</android.support.constraint.ConstraintLayout>

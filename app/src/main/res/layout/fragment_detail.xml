@@ -10,6 +10,23 @@
         android:layout_height="match_parent"
         android:paddingBottom="32dp">
 
+        <TextView
+            android:id="@+id/btnBack"
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:drawableStart="@drawable/ic_back_24dp"
+            android:fontFamily="@font/harmonia_semibd"
+            android:gravity="center"
+            android:paddingEnd="16dp"
+            android:paddingStart="8dp"
+            android:text="@string/back"
+            android:textColor="@color/txtColorPrimary"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageView
             android:id="@+id/imgHero"
             android:layout_width="match_parent"
@@ -27,11 +44,12 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/harmonia_semibd"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnBack"
             tools:text="180 West 20th Street, Unit 2C" />
 
         <TextView
@@ -42,7 +60,9 @@
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
+            android:fontFamily="@font/harmonia_semibd"
             android:paddingBottom="8dp"
+
             android:textColor="@color/txtColorSecondary"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -56,62 +76,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:fontFamily="@font/harmonia_regular"
             app:layout_constraintStart_toStartOf="@+id/txtAvailability"
             app:layout_constraintTop_toBottomOf="@+id/txtAvailability"
             tools:text="$2,300" />
 
-        <TextView
-            android:id="@+id/txtBed"
-            style="@style/TextAppearance.AppCompat.Body2"
+        <include
+            layout="@layout/widget_apt_attributes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toStartOf="@+id/divider1"
-            app:layout_constraintTop_toBottomOf="@+id/txtAvailability"
-            tools:text="1 BD" />
-
-        <View
-            android:id="@+id/divider1"
-            android:layout_width="1dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="8dp"
-            android:background="#c2c2c2"
-            app:layout_constraintBottom_toBottomOf="@+id/txtBed"
-            app:layout_constraintEnd_toStartOf="@+id/txtBath"
-            app:layout_constraintTop_toTopOf="@+id/txtBed" />
-
-        <TextView
-            android:id="@+id/txtBath"
-            style="@style/TextAppearance.AppCompat.Body2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toStartOf="@+id/divider2"
-            app:layout_constraintTop_toBottomOf="@+id/txtAvailability"
-            tools:text="1 BA" />
-
-        <View
-            android:id="@+id/divider2"
-            android:layout_width="1dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="8dp"
-            android:background="#c2c2c2"
-            app:layout_constraintBottom_toBottomOf="@+id/txtBath"
-            app:layout_constraintEnd_toStartOf="@+id/txtArea"
-            app:layout_constraintTop_toTopOf="@+id/txtBath" />
-
-        <TextView
-            android:id="@+id/txtArea"
-            style="@style/TextAppearance.AppCompat.Body2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/txtPrice"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtAvailability"
-            tools:text="700 SF" />
+            app:layout_constraintTop_toTopOf="@+id/txtPrice" />
 
         <TextView
             android:id="@+id/lblNeighborhood"
@@ -121,6 +97,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:fontFamily="@font/harmonia_semibd"
             android:text="@string/neighborhood"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -135,6 +112,8 @@
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
+
+            android:fontFamily="@font/harmonia_semibd"
             android:paddingBottom="8dp"
             android:textColor="@color/txtColorSecondary"
             android:textSize="14sp"

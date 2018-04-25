@@ -20,6 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:fontFamily="@font/harmonia_semibd"
             android:text="@string/app_name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -29,6 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:fontFamily="@font/harmonia_semibd"
             android:text="@string/sample_apt_finder"
             android:textColor="@color/txtColorPrimary"
             app:layout_constraintBottom_toBottomOf="@+id/textView"
@@ -63,19 +65,21 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="12dp"
-            android:text="New York City"
+            android:fontFamily="@font/harmonia_semibd"
+            android:text="@string/new_york_city"
             android:textColor="@color/txtColorPrimary"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@+id/view"
             app:layout_constraintTop_toBottomOf="@+id/view" />
 
         <TextView
-            android:id="@+id/txtAvailability"
+            android:id="@+id/txtNeighborhood"
             style="@style/Base.TextAppearance.AppCompat.Body2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="@string/select_a_neighborhood"
+            android:fontFamily="@font/harmonia_semibd"
             android:textColor="@color/txtColorSecondary"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/txtCityName"
@@ -91,6 +95,8 @@
             android:layout_marginEnd="8dp"
             android:background="@drawable/button_background"
             android:clickable="true"
+            android:fontFamily="@font/harmonia_semibd"
+
             android:drawableEnd="@drawable/ic_list_24dp"
             android:drawablePadding="8dp"
             android:foreground="?attr/selectableItemBackground"
