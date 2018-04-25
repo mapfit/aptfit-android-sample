@@ -26,6 +26,7 @@ import com.mapfit.realestate.model.RealEstate
 import com.mapfit.realestate.ui.common.RealEstateAdapter
 import com.mapfit.realestate.ui.main.MainViewModel
 import com.mapfit.realestate.ui.widget.PriceMarkerBitmapDrawable
+import com.mapfit.realestate.util.computeOffsetToPoint
 import com.mapfit.realestate.util.openProjectPage
 import kotlinx.android.synthetic.main.fragment_map.*
 import kotlinx.coroutines.experimental.Job
@@ -200,19 +201,28 @@ class MapFragment : Fragment() {
             ?.let {
                 val position = it.realEstates.indexOf(estate)
 
-                realEstateLayoutManager.smoothScrollToPosition(
-                    recyclerView,
-                    RecyclerView.State(),
-                    position
-                )
+                if (recyclerView.visibility == View.VISIBLE) {
+                    realEstateLayoutManager.smoothScrollToPosition(
+                        recyclerView,
+                        RecyclerView.State(),
+                        position
+                    )
+                } else {
+                    realEstateLayoutManager.scrollToPosition(position)
+                }
             }
 
         // set map center and zoom level
-        if (!::selectionJob.isInitialized || selectionJob.isCompleted && !selectionJob.isActive) {
+        if (!::selectionJob.isInitialized || selectionJob.isCompleted) {
             selectionJob = launch {
                 mapfitMap.apply {
-                    chosenMarker?.let { setCenter(it.getPosition(), ANIMATION_DURATION) }
+
+                    chosenMarker?.let {
+                        val center = computeOffsetToPoint(it.getPosition(), 55.0, 180.0)
+                        setCenter(center, ANIMATION_DURATION)
+                    }
                     setZoom(18f, ANIMATION_DURATION)
+                    setRotation(0f)
                     delay(ANIMATION_DURATION)
                 }
             }
@@ -237,14 +247,14 @@ class MapFragment : Fragment() {
     }
 
     private fun onNeighborhoodSelected(neighborhood: Neighborhood) {
-        realEstateAdapter.replaceItems(neighborhood.realEstates)
-        recyclerView.visibility = View.GONE
-
         val selectedPolygon = neighborhoodHashMap[neighborhood]
 
         selectedPolygon
             ?.takeIf { onPolygonSelected(it) }
             ?.let {
+                realEstateAdapter.replaceItems(neighborhood.realEstates)
+                recyclerView.visibility = View.GONE
+
                 viewModel.onNeighborhoodSelected(neighborhood)
 
                 mapfitMap.apply {
@@ -297,7 +307,7 @@ class MapFragment : Fragment() {
 
                 realEstateHashMap[realEstate] = marker
 
-                launch (UI){
+                launch(UI) {
                     marker.setIcon(
                         PriceMarkerBitmapDrawable(
                             getContext()!!,
@@ -365,7 +375,6 @@ class MapFragment : Fragment() {
         super.onLowMemory()
         mapView.onLowMemory()
     }
-
 
     companion object {
         private const val ANIMATION_DURATION = 250L
