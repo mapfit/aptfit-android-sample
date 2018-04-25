@@ -12,7 +12,7 @@ import java.io.IOException
 import java.io.InputStream
 
 
-class BoundaryRepo {
+class NeighborhoodRepo {
 
     private val estateRepo = RealEstateRepo()
 
