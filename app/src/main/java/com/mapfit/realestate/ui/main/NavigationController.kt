@@ -30,6 +30,8 @@ class NavigationController(
         changeFragment(realEstateDetailFragment)
     }
 
+    fun getCurrentFragment() = fragmentManager.findFragmentById(containerId)
+
     private fun changeFragment(fragment: Fragment) {
         val backStateName = fragment.javaClass.name
 

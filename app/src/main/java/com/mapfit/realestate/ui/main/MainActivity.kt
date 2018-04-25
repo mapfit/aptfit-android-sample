@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.mapfit.realestate.R
 import com.mapfit.realestate.model.Neighborhood
+import com.mapfit.realestate.ui.list.RealEstateListFragment
+import com.mapfit.realestate.ui.map.MapFragment
 import com.mapfit.realestate.util.openProjectPage
 import com.mapfit.realestate.util.setCompoundDrawables
 import kotlinx.android.synthetic.main.activity_main.*
@@ -17,6 +19,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var navigationController: NavigationController
     private lateinit var viewModel: MainViewModel
+
+    enum class ScreenState { LIST_VIEW, MAP_VIEW, DETAIL_VIEW }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +55,17 @@ class MainActivity : AppCompatActivity() {
         viewModel.realEstateEvent.observe(this, Observer {
             it?.let { changeScreen(ScreenState.DETAIL_VIEW) }
         })
+
+        viewModel.backNavigationEvent.observe(this, Observer {
+            it?.let {
+                onBackPressed()
+
+                when (navigationController.getCurrentFragment()) {
+                    is MapFragment -> changeScreen(ScreenState.MAP_VIEW)
+                    is RealEstateListFragment -> changeScreen(ScreenState.LIST_VIEW)
+                }
+            }
+        })
     }
 
     /**
@@ -70,13 +85,19 @@ class MainActivity : AppCompatActivity() {
             }
             ScreenState.DETAIL_VIEW -> {
                 navigationController.openDetailView()
-                Pair(getString(R.string.map_view), R.drawable.ic_map_24dp)
+                Pair("", 0)
             }
+        }
+
+        if (newState == ScreenState.DETAIL_VIEW) {
+            btnMapList.visibility = View.GONE
+        } else {
+            View.VISIBLE
+            btnMapList.setCompoundDrawables(end = ContextCompat.getDrawable(this, resourceId))
         }
 
         btnMapList.tag = newState
         btnMapList.text = text
-        btnMapList.setCompoundDrawables(end = ContextCompat.getDrawable(this, resourceId))
     }
 
     /**
@@ -85,15 +106,12 @@ class MainActivity : AppCompatActivity() {
      * @param neighborhood to be displayed
      */
     private fun onNeighborhoodSelected(neighborhood: Neighborhood) {
-        txtAvailability.text = neighborhood.name
-        txtAvailability.alpha = 0f
-        txtAvailability.animate().alphaBy(1f).setDuration(200).start()
+        txtNeighborhood.text = neighborhood.name
+        txtNeighborhood.alpha = 0f
+        txtNeighborhood.animate().alphaBy(1f).setDuration(200).start()
         btnMapList.visibility = View.VISIBLE
         btnMapList.animate().alphaBy(1f).setDuration(200).start()
     }
-
-
-    enum class ScreenState { LIST_VIEW, MAP_VIEW, DETAIL_VIEW }
 
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount == 1) {

@@ -19,6 +19,7 @@ import com.mapfit.realestate.ui.main.MainViewModel
 import com.mapfit.realestate.util.GlideApp
 import com.mapfit.realestate.util.openProjectPage
 import kotlinx.android.synthetic.main.fragment_detail.*
+import kotlinx.android.synthetic.main.widget_apt_attributes.*
 import kotlinx.android.synthetic.main.widget_mapfit_footer.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.channels.BroadcastChannel
@@ -46,13 +47,19 @@ class RealEstateDetailFragment : Fragment() {
         initMap()
     }
 
-    fun init() {
+    private fun init() {
         mapChannel = BroadcastChannel(1)
 
         txtStartBuilding.setOnClickListener { openProjectPage(activity!!) }
+        btnBack.setOnClickListener { viewModel.onBackNavigation() }
 
         viewModel.realEstateEvent.observe(this, Observer {
-            it?.let { launch { displayRealEstate(it, mapChannel) } }
+            it?.let {
+                launch {
+                    displayRealEstate(it)
+                    displayRealEstateMap(it, mapChannel)
+                }
+            }
         })
 
         viewModel.neighborhoodEvent.observe(this@RealEstateDetailFragment, Observer {
@@ -68,33 +75,33 @@ class RealEstateDetailFragment : Fragment() {
                 mapfitMap.getMapOptions().apply {
                     zoomControlsEnabled = true
                     recenterButtonEnabled = true
+                    panEnabled = false
                 }
             }
         })
     }
 
-    private fun loadTransitEnabledTheme(mapfitMap: MapfitMap) {
-        runBlocking { mapChannel.send(mapfitMap) }
+    private fun loadTransitEnabledTheme(mapfitMap: MapfitMap) = runBlocking {
+        mapChannel.send(mapfitMap)
     }
 
-    private suspend fun displayRealEstate(
+    private fun displayRealEstate(realEstate: RealEstate) = launch(UI) {
+        GlideApp.with(this@RealEstateDetailFragment)
+            .load(realEstate.imageUrl)
+            .into(imgHero)
+        txtAddress.text = realEstate.address
+        txtNeighborhood.text = realEstate.neighborhood
+        txtPrice.text = realEstate.price
+        txtBed.text = getString(R.string.bedroom_count, realEstate.bedroomCount)
+        txtBath.text = getString(R.string.bathroom_count, realEstate.bathroomCount)
+        txtArea.text = getString(R.string.apt_area, realEstate.area)
+        txtAvailability.text = getString(R.string.available, realEstate.availableDate)
+    }
+
+    private suspend fun displayRealEstateMap(
         realEstate: RealEstate,
         mapChannel: BroadcastChannel<MapfitMap>
     ) {
-        launch(UI) {
-            GlideApp.with(this@RealEstateDetailFragment)
-                .load(realEstate.imageUrl)
-                .into(imgHero)
-            txtAddress.text = realEstate.address
-            txtNeighborhood.text = realEstate.neighborhood
-            txtPrice.text = realEstate.price
-            txtBed.text = getString(R.string.bedroom_count, realEstate.bedroomCount)
-            txtBath.text = getString(R.string.bathroom_count, realEstate.bathroomCount)
-            txtArea.text = getString(R.string.apt_area, realEstate.area)
-            txtAvailability.text = getString(R.string.available, realEstate.availableDate)
-
-        }
-
         val mapfitMap = mapChannel.openSubscription().receive()
 
         mapfitMap.addMarker(
@@ -102,9 +109,8 @@ class RealEstateDetailFragment : Fragment() {
             true,
             object : OnMarkerAddedCallback {
                 override fun onMarkerAdded(marker: Marker) {
-
-                    mapfitMap.getMapOptions().customTheme =
-                            "https://cdn.mapfit.com/v2-3/themes/mapfit-day.yaml"
+                    marker.setTitle("")
+                    mapfitMap.getMapOptions().customTheme = "mapfit-custom-day.yaml"
 
                     mapfitMap.apply {
                         setCenter(marker.getPosition(), 200)
@@ -116,7 +122,6 @@ class RealEstateDetailFragment : Fragment() {
             }
         )
     }
-
 
     @SuppressLint("ResourceType")
     private suspend fun displayNeighborhood(
@@ -132,8 +137,8 @@ class RealEstateDetailFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mapView.onLowMemory()
     }
-
 }
