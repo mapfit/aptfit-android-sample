@@ -13,4 +13,6 @@
     <string name="apt_area">%1$d SF</string>
     <string name="neighborhood">Neighborhood</string>
     <string name="available">Available: %1$s</string>
+    <string name="back">Back</string>
+    <string name="new_york_city">New York City</string>
 </resources>
