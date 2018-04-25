@@ -45,7 +45,7 @@ class RealEstateRepo {
         return allRealEstates
     }
 
-    fun financialDistrict(): List<RealEstate> {
+    private fun financialDistrict(): List<RealEstate> {
         return listOf(
             RealEstate(
                 "apt1",
@@ -96,7 +96,7 @@ class RealEstateRepo {
         )
     }
 
-    fun greenwichVillage(): List<RealEstate> {
+    private fun greenwichVillage(): List<RealEstate> {
         return listOf(
             RealEstate(
                 "apt1",
@@ -124,7 +124,7 @@ class RealEstateRepo {
         )
     }
 
-    fun batteryParkCity(): List<RealEstate> {
+    private fun batteryParkCity(): List<RealEstate> {
         return listOf(
             RealEstate(
                 "apt1",
@@ -165,7 +165,7 @@ class RealEstateRepo {
         )
     }
 
-    fun littleItaly(): List<RealEstate> {
+    private fun littleItaly(): List<RealEstate> {
         return listOf(
             RealEstate(
                 "apt1",
@@ -203,7 +203,7 @@ class RealEstateRepo {
         )
     }
 
-    fun chelsea(): List<RealEstate> {
+    private fun chelsea(): List<RealEstate> {
         return listOf(
             RealEstate(
                 "apt1",
@@ -241,7 +241,7 @@ class RealEstateRepo {
         )
     }
 
-    fun eastVillage(): List<RealEstate> {
+    private fun eastVillage(): List<RealEstate> {
         return listOf(
             RealEstate(
                 "apt1",
@@ -280,7 +280,7 @@ class RealEstateRepo {
         )
     }
 
-    fun tribeca(): List<RealEstate> {
+    private fun tribeca(): List<RealEstate> {
         return listOf(
             RealEstate(
                 "apt1",
@@ -319,7 +319,7 @@ class RealEstateRepo {
         )
     }
 
-    fun chinaTown(): List<RealEstate> {
+    private fun chinaTown(): List<RealEstate> {
         return listOf(
             RealEstate(
                 "apt1",
@@ -346,7 +346,7 @@ class RealEstateRepo {
         )
     }
 
-    fun murrayHill(): List<RealEstate> {
+    private fun murrayHill(): List<RealEstate> {
         return listOf(
             RealEstate(
                 "apt1",
@@ -385,7 +385,7 @@ class RealEstateRepo {
         )
     }
 
-    fun stuyesantTown(): List<RealEstate> {
+    private fun stuyesantTown(): List<RealEstate> {
         return listOf(
             RealEstate(
                 "apt1",
@@ -424,7 +424,7 @@ class RealEstateRepo {
         )
     }
 
-    fun washingtonHeights(): List<RealEstate> {
+    private fun washingtonHeights(): List<RealEstate> {
         return listOf(
             RealEstate(
                 "apt1",
@@ -490,7 +490,7 @@ class RealEstateRepo {
 
     }
 
-    fun centralHarlem(): List<RealEstate> {
+    private fun centralHarlem(): List<RealEstate> {
         return listOf(
             RealEstate(
                 "apt1",
@@ -531,7 +531,7 @@ class RealEstateRepo {
         )
     }
 
-    fun soho(): List<RealEstate> {
+    private fun soho(): List<RealEstate> {
         return listOf(
             RealEstate(
                 "apt1",
@@ -571,7 +571,7 @@ class RealEstateRepo {
         )
     }
 
-    fun spanishHarlem(): List<RealEstate> {
+    private fun spanishHarlem(): List<RealEstate> {
         return listOf(
             RealEstate(
                 "apt1",
@@ -624,7 +624,7 @@ class RealEstateRepo {
 
     }
 
-    fun morningsideHeights(): List<RealEstate> {
+    private fun morningsideHeights(): List<RealEstate> {
         return listOf(
             RealEstate(
                 "apt1",
@@ -665,7 +665,7 @@ class RealEstateRepo {
         )
     }
 
-    fun hellsKitchen(): List<RealEstate> {
+    private fun hellsKitchen(): List<RealEstate> {
         return listOf(
             RealEstate(
                 "apt1",
@@ -705,7 +705,7 @@ class RealEstateRepo {
 
     }
 
-    fun flatironDistrict(): List<RealEstate> {
+    private fun flatironDistrict(): List<RealEstate> {
         return listOf(
             RealEstate(
                 "apt1",
@@ -745,7 +745,7 @@ class RealEstateRepo {
 
     }
 
-    fun midtownWest(): List<RealEstate> {
+    private fun midtownWest(): List<RealEstate> {
         return listOf(
             RealEstate(
                 "apt1",
@@ -832,7 +832,7 @@ class RealEstateRepo {
 
     }
 
-    fun midtownEast(): List<RealEstate> {
+    private fun midtownEast(): List<RealEstate> {
         return listOf(
             RealEstate(
                 "apt1",
@@ -872,7 +872,7 @@ class RealEstateRepo {
 
     }
 
-    fun lowerEastSide(): List<RealEstate> {
+    private fun lowerEastSide(): List<RealEstate> {
         return listOf(
             RealEstate(
                 "apt1",
@@ -926,7 +926,7 @@ class RealEstateRepo {
 
     }
 
-    fun gramercy(): List<RealEstate> {
+    private fun gramercy(): List<RealEstate> {
         return listOf(
             RealEstate(
                 "apt1",
@@ -954,7 +954,7 @@ class RealEstateRepo {
 
     }
 
-    fun upperWestSide(): List<RealEstate> {
+    private fun upperWestSide(): List<RealEstate> {
         return listOf(
             RealEstate(
                 "apt1",
@@ -1043,13 +1043,13 @@ class RealEstateRepo {
 
     }
 
-    fun westVillage(): List<RealEstate> {
+    private fun westVillage(): List<RealEstate> {
         return listOf(
             RealEstate(
                 "apt1",
                 "https://images.unsplash.com/photo-1505873242700-f289a29e1e0f?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=91b874ce453385d8867cc98ee582fee3&auto=format&fit=crop&w=1024&q=80",
                 "$2,400",
-                "173 Christopher St\n" +
+                "173 Christopher St" +
                         "New York, NY 10014",
                 "West Village, Manhattan",
                 2,
@@ -1073,7 +1073,7 @@ class RealEstateRepo {
                 "apt2",
                 "https://images.unsplash.com/photo-1494526585095-c41746248156?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=fd170b4cebb0b97e6337529754defcf7&auto=format&fit=crop&w=1024&q=80",
                 "$5,300",
-                "220 W 13th St\n" +
+                "220 W 13th St" +
                         "New York, NY 10011",
                 "West Village, Manhattan",
                 2,
@@ -1085,7 +1085,7 @@ class RealEstateRepo {
 
     }
 
-    fun inwood(): List<RealEstate> {
+    private fun inwood(): List<RealEstate> {
         return listOf(
             RealEstate(
                 "apt1",
@@ -1123,7 +1123,7 @@ class RealEstateRepo {
         )
     }
 
-    fun hamiltonHeights(): List<RealEstate> {
+    private fun hamiltonHeights(): List<RealEstate> {
         return listOf(
             RealEstate(
                 "apt1",
@@ -1162,7 +1162,7 @@ class RealEstateRepo {
 
     }
 
-    fun noho(): List<RealEstate> {
+    private fun noho(): List<RealEstate> {
         return listOf(
             RealEstate(
                 "apt1",
@@ -1201,7 +1201,7 @@ class RealEstateRepo {
 
     }
 
-    fun twoBridges(): List<RealEstate> {
+    private fun twoBridges(): List<RealEstate> {
         return listOf(
             RealEstate(
                 "apt1",
@@ -1240,13 +1240,13 @@ class RealEstateRepo {
 
     }
 
-    fun nolita(): List<RealEstate> {
+    private fun nolita(): List<RealEstate> {
         return listOf(
             RealEstate(
                 "apt1",
                 "https://images.unsplash.com/photo-1505873242700-f289a29e1e0f?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=91b874ce453385d8867cc98ee582fee3&auto=format&fit=crop&w=1024&q=80",
                 "$2,400",
-                "31 Prince St\n" +
+                "31 Prince St" +
                         "New York, NY 10012",
                 "Nolita, Manhattan",
                 2,
@@ -1281,13 +1281,13 @@ class RealEstateRepo {
 
     }
 
-    fun kipsBay(): List<RealEstate> {
+    private fun kipsBay(): List<RealEstate> {
         return listOf(
             RealEstate(
                 "apt1",
                 "https://images.unsplash.com/photo-1505873242700-f289a29e1e0f?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=91b874ce453385d8867cc98ee582fee3&auto=format&fit=crop&w=1024&q=80",
                 "$2,400",
-                "229 E 29th St\n" +
+                "229 E 29th St" +
                         "New York, NY 10016",
                 "Kips Bay, Manhattan",
                 2,
@@ -1310,7 +1310,7 @@ class RealEstateRepo {
                 "apt3",
                 "https://images.unsplash.com/photo-1494526585095-c41746248156?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=fd170b4cebb0b97e6337529754defcf7&auto=format&fit=crop&w=1024&q=80",
                 "$5,300",
-                "522 1st Avenue\n" +
+                "522 1st Avenue" +
                         "New York, NY 10016",
                 "Kips Bay, Manhattan",
                 2,
@@ -1322,13 +1322,13 @@ class RealEstateRepo {
 
     }
 
-    fun upperEastSide(): List<RealEstate> {
+    private fun upperEastSide(): List<RealEstate> {
         return listOf(
             RealEstate(
                 "apt1",
                 "https://images.unsplash.com/photo-1505873242700-f289a29e1e0f?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=91b874ce453385d8867cc98ee582fee3&auto=format&fit=crop&w=1024&q=80",
                 "$2,400",
-                "179 E 94th St\n" +
+                "179 E 94th St" +
                         "New York, NY 10128",
                 "Upper East Side, Manhattan",
                 2,
@@ -1340,7 +1340,7 @@ class RealEstateRepo {
                 "apt2",
                 "https://images.unsplash.com/photo-1494526585095-c41746248156?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=fd170b4cebb0b97e6337529754defcf7&auto=format&fit=crop&w=1024&q=80",
                 "$3,200",
-                "47 E 90th St\n" +
+                "47 E 90th St" +
                         "New York, NY 10128",
                 "Upper East Side, Manhattan",
                 2,
@@ -1352,8 +1352,8 @@ class RealEstateRepo {
                 "apt3",
                 "https://images.unsplash.com/photo-1494526585095-c41746248156?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=fd170b4cebb0b97e6337529754defcf7&auto=format&fit=crop&w=1024&q=80",
                 "$5,300",
-                "121 E 81st St\n" +
-                        "New York, NY 10028\n",
+                "121 E 81st St" +
+                        "New York, NY 10028",
                 "Upper East Side, Manhattan",
                 2,
                 1,
@@ -1364,7 +1364,7 @@ class RealEstateRepo {
                 "apt3",
                 "https://images.unsplash.com/photo-1494526585095-c41746248156?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=fd170b4cebb0b97e6337529754defcf7&auto=format&fit=crop&w=1024&q=80",
                 "$4,200",
-                "307 E 87th St\n" +
+                "307 E 87th St" +
                         "New York, NY 10128",
                 "Upper East Side, Manhattan",
                 3,
@@ -1376,7 +1376,7 @@ class RealEstateRepo {
                 "apt3",
                 "https://images.unsplash.com/photo-1494526585095-c41746248156?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=fd170b4cebb0b97e6337529754defcf7&auto=format&fit=crop&w=1024&q=80",
                 "$4,500",
-                "\n" +
+                "" +
                         "9 E 77th St, New York, NY 10075",
                 "Upper East Side, Manhattan",
                 3,
@@ -1388,8 +1388,8 @@ class RealEstateRepo {
                 "apt3",
                 "https://images.unsplash.com/photo-1494526585095-c41746248156?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=fd170b4cebb0b97e6337529754defcf7&auto=format&fit=crop&w=1024&q=80",
                 "$4,100",
-                "405 E 72nd St\n" +
-                        "New York, NY 10021\n",
+                "405 E 72nd St" +
+                        "New York, NY 10021",
                 "Upper East Side, Manhattan",
                 3,
                 2,
@@ -1400,8 +1400,8 @@ class RealEstateRepo {
                 "apt3",
                 "https://images.unsplash.com/photo-1494526585095-c41746248156?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=fd170b4cebb0b97e6337529754defcf7&auto=format&fit=crop&w=1024&q=80",
                 "$3,600",
-                "167 E 64th St\n" +
-                        "New York, NY 10065\n",
+                "167 E 64th St" +
+                        "New York, NY 10065",
                 "Upper East Side, Manhattan",
                 1,
                 1,
@@ -1412,13 +1412,13 @@ class RealEstateRepo {
 
     }
 
-    fun cityHallArea(): List<RealEstate> {
+    private fun cityHallArea(): List<RealEstate> {
         return listOf(
             RealEstate(
                 "apt1",
                 "https://images.unsplash.com/photo-1505873242700-f289a29e1e0f?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=91b874ce453385d8867cc98ee582fee3&auto=format&fit=crop&w=1024&q=80",
                 "$2,400",
-                "49 Chambers St\n" +
+                "49 Chambers St" +
                         "New York, NY 10007",
                 "City Hall Area, Manhattan",
                 2,
@@ -1441,7 +1441,7 @@ class RealEstateRepo {
 
     }
 
-    fun rooseveltIsland(): List<RealEstate> {
+    private fun rooseveltIsland(): List<RealEstate> {
         return listOf(
             RealEstate(
                 "apt1",
