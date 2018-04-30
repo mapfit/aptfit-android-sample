@@ -118,7 +118,9 @@ class RealEstateDetailFragment : Fragment() {
                     }
                 }
 
-                override fun onError(exception: Exception) {}
+                override fun onError(exception: Exception) {
+                    exception.printStackTrace()
+                }
             }
         )
     }

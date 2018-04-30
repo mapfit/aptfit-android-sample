@@ -9,5 +9,9 @@ fun TextView.setCompoundDrawables(
     end: Drawable? = null,
     bottom: Drawable? = null
 ) {
-    setCompoundDrawablesWithIntrinsicBounds(start, top, end, bottom)
+    try {
+        setCompoundDrawablesWithIntrinsicBounds(start, top, end, bottom)
+
+    } catch (ignored: Exception) {
+    }
 }
