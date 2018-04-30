@@ -37,6 +37,10 @@ import kotlinx.coroutines.experimental.launch
 @SuppressLint("ResourceType")
 class MapFragment : Fragment() {
 
+    companion object {
+        private const val ANIMATION_DURATION = 250L
+    }
+
     private lateinit var viewModel: MainViewModel
     private lateinit var mapfitMap: MapfitMap
     private lateinit var realEstateAdapter: RealEstateAdapter
@@ -395,10 +399,6 @@ class MapFragment : Fragment() {
     override fun onLowMemory() {
         super.onLowMemory()
         mapView.onLowMemory()
-    }
-
-    companion object {
-        private const val ANIMATION_DURATION = 250L
     }
 
 }

@@ -53,16 +53,13 @@ class NeighborhoodRepo {
         val latLngs = mutableListOf<MutableList<LatLng>>()
 
         doubles.forEach {
-
             it.forEach {
                 val outerList = mutableListOf<LatLng>()
-//                val innerList =mutableListOf<LatLng>()
                 it.forEach {
                     outerList.add(LatLng(it[1], it[0]))
                 }
                 latLngs.add(outerList)
             }
-
         }
 
         return latLngs
