@@ -1,5 +1,6 @@
 package com.mapfit.realestate.ui.common
 
+import android.arch.lifecycle.LifecycleOwner
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -10,15 +11,16 @@ import com.mapfit.realestate.R
 import com.mapfit.realestate.model.RealEstate
 import com.mapfit.realestate.util.GlideApp
 
+/**
+ * Basic adapter for displaying [RealEstate] items horizontally or vertically.
+ */
 class RealEstateAdapter(
     private val clickListener: (RealEstate) -> Unit,
     private val footerClickListener: () -> Unit,
     private val itemType: ItemType
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-
     private val items = mutableListOf<RealEstate>()
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val type: ItemType = ItemType.typeForValue(viewType) ?: ItemType.NONE
@@ -52,9 +54,8 @@ class RealEstateAdapter(
         }
     }
 
-
     override fun getItemViewType(position: Int): Int {
-        return if (position == items.size  && itemType != ItemType.HORIZONTAL) {
+        return if (position == items.size && itemType != ItemType.HORIZONTAL) {
             ItemType.FOOTER.getValue()
         } else {
             itemType.getValue()
@@ -68,7 +69,6 @@ class RealEstateAdapter(
             is RealEstateViewHolder -> holder.bind(items[position], clickListener)
             is FooterVH -> holder.bind(footerClickListener)
         }
-
     }
 
     fun addItems(items: List<RealEstate>) = this.items.addAll(items)
@@ -91,22 +91,34 @@ class RealEstateAdapter(
             fun typeForValue(value: Int): ItemType? =
                 ItemType.values().find { it.getValue() == value }
         }
-
     }
 
 }
 
-class FooterVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    private val txtStartBuilding = itemView.findViewById<TextView>(R.id.txtStartBuilding)
+/**
+ * ViewHolder for horizontal [RealEstate] lists.
+ */
+class HorizontalListVH(itemView: View) : RealEstateViewHolder(itemView) {
 
-    fun bind(clickListener: () -> Unit) {
-        txtStartBuilding.setOnClickListener { clickListener() }
+    private val topBorder = itemView.findViewById<View>(R.id.topBorder)
+
+    override fun bind(realEstate: RealEstate, clickListener: (RealEstate) -> Unit) {
+        super.bind(realEstate, clickListener)
+
+        realEstate.isActive.value?.peekContent()?.let {
+            topBorder.visibility = if (it) View.VISIBLE else View.INVISIBLE
+        }
+
+        realEstate.isActive.observe(itemView.context as LifecycleOwner, EventObserver {
+            topBorder.visibility = if (it) View.VISIBLE else View.INVISIBLE
+        })
     }
 }
 
-class HorizontalListVH(itemView: View) : RealEstateViewHolder(itemView)
-
+/**
+ * ViewHolder for vertical [RealEstate] lists.
+ */
 class VerticalListVH(itemView: View) : RealEstateViewHolder(itemView) {
 
     private val txtPrice = itemView.findViewById<TextView>(R.id.txtPrice)
@@ -117,17 +129,19 @@ class VerticalListVH(itemView: View) : RealEstateViewHolder(itemView) {
     }
 }
 
+/**
+ * Base [RealEstate] viewholder.
+ */
 abstract class RealEstateViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    val context = itemView.context
-
-    val cardView = itemView.findViewById<View>(R.id.cardView)
-    val imgHero = itemView.findViewById<ImageView>(R.id.imgHero)
-    val txtAddress = itemView.findViewById<TextView>(R.id.txtAddress)
-    val txtNeighborhood = itemView.findViewById<TextView>(R.id.txtAvailability)
-    val txtBed = itemView.findViewById<TextView>(R.id.txtBed)
-    val txtBath = itemView.findViewById<TextView>(R.id.txtBath)
-    val txtArea = itemView.findViewById<TextView>(R.id.txtArea)
+    private val context = itemView.context
+    private val cardView = itemView.findViewById<View>(R.id.cardView)
+    private val imgHero = itemView.findViewById<ImageView>(R.id.imgHero)
+    private val txtAddress = itemView.findViewById<TextView>(R.id.txtAddress)
+    private val txtNeighborhood = itemView.findViewById<TextView>(R.id.txtNeighborhood)
+    private val txtBed = itemView.findViewById<TextView>(R.id.txtBed)
+    private val txtBath = itemView.findViewById<TextView>(R.id.txtBath)
+    private val txtArea = itemView.findViewById<TextView>(R.id.txtArea)
 
     open fun bind(realEstate: RealEstate, clickListener: (RealEstate) -> Unit) {
         GlideApp.with(context).load(realEstate.imageUrl).into(imgHero)
@@ -141,4 +155,13 @@ abstract class RealEstateViewHolder(itemView: View) : RecyclerView.ViewHolder(it
         cardView.setOnClickListener { clickListener(realEstate) }
     }
 
+}
+
+class FooterVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+    private val txtStartBuilding = itemView.findViewById<TextView>(R.id.txtStartBuilding)
+
+    fun bind(clickListener: () -> Unit) {
+        txtStartBuilding.setOnClickListener { clickListener() }
+    }
 }

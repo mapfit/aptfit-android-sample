@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
      * @param newState expected screen state
      */
     private fun changeScreen(newState: ScreenState) {
-        val (text, resourceId) = when (newState) {
+        val (newText, resourceId) = when (newState) {
             ScreenState.LIST_VIEW -> {
                 navigationController.openListView()
                 Pair(getString(R.string.map_view), R.drawable.ic_map_24dp)
@@ -89,15 +89,22 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        if (newState == ScreenState.DETAIL_VIEW) {
-            btnMapList.visibility = View.GONE
-        } else {
-            View.VISIBLE
-            btnMapList.setCompoundDrawables(end = ContextCompat.getDrawable(this, resourceId))
-        }
+        val isDetailState = newState == ScreenState.DETAIL_VIEW
 
-        btnMapList.tag = newState
-        btnMapList.text = text
+        btnMapList.apply {
+            visibility = if (isDetailState) View.GONE else View.VISIBLE
+            tag = newState
+            text = newText
+
+            if (!isDetailState) {
+                setCompoundDrawables(
+                    end = ContextCompat.getDrawable(
+                        this@MainActivity,
+                        resourceId
+                    )
+                )
+            }
+        }
     }
 
     /**
@@ -106,11 +113,16 @@ class MainActivity : AppCompatActivity() {
      * @param neighborhood to be displayed
      */
     private fun onNeighborhoodSelected(neighborhood: Neighborhood) {
-        txtNeighborhood.text = neighborhood.name
-        txtNeighborhood.alpha = 0f
-        txtNeighborhood.animate().alphaBy(1f).setDuration(200).start()
-        btnMapList.visibility = View.VISIBLE
-        btnMapList.animate().alphaBy(1f).setDuration(200).start()
+        txtNeighborhood.apply {
+            text = neighborhood.name
+            alpha = 0f
+            animate().alphaBy(1f).setDuration(200).start()
+        }
+
+        btnMapList.apply {
+            visibility = View.VISIBLE
+            animate().alphaBy(1f).setDuration(200).start()
+        }
     }
 
     override fun onBackPressed() {

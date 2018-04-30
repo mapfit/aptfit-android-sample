@@ -23,6 +23,7 @@ import com.mapfit.android.geometry.LatLng
 import com.mapfit.realestate.R
 import com.mapfit.realestate.model.Neighborhood
 import com.mapfit.realestate.model.RealEstate
+import com.mapfit.realestate.ui.common.Event
 import com.mapfit.realestate.ui.common.RealEstateAdapter
 import com.mapfit.realestate.ui.main.MainViewModel
 import com.mapfit.realestate.ui.widget.PriceMarkerBitmapDrawable
@@ -30,7 +31,6 @@ import com.mapfit.realestate.util.computeOffsetToPoint
 import com.mapfit.realestate.util.openProjectPage
 import kotlinx.android.synthetic.main.fragment_map.*
 import kotlinx.coroutines.experimental.Job
-import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.delay
 import kotlinx.coroutines.experimental.launch
 
@@ -175,6 +175,7 @@ class MapFragment : Fragment() {
         val chosenMarker: Marker? = marker ?: realEstate?.let { getMarkerForRealEstate(it) }
         val estate: RealEstate? = realEstate ?: marker?.let { getRealEstateForMarker(it) }
 
+
         // change the marker and building colors
         if (selectedMarker == null || selectedMarker != chosenMarker) {
             chosenMarker?.apply {
@@ -195,6 +196,7 @@ class MapFragment : Fragment() {
             }
         }
 
+
         // change recyclerview position to the selected marker's real estate
         selectedNeighborhood
             ?.takeIf { marker != null }
@@ -207,13 +209,16 @@ class MapFragment : Fragment() {
                         RecyclerView.State(),
                         position
                     )
+
                 } else {
                     realEstateLayoutManager.scrollToPosition(position)
                 }
             }
 
+
         // set map center and zoom level
         if (!::selectionJob.isInitialized || selectionJob.isCompleted) {
+
             selectionJob = launch {
                 mapfitMap.apply {
 
@@ -226,6 +231,12 @@ class MapFragment : Fragment() {
                     delay(ANIMATION_DURATION)
                 }
             }
+
+            if (estate != selectedRealEstate || selectedRealEstate == null) {
+                estate?.isActive?.value = Event(true)
+                selectedRealEstate?.isActive?.value = Event(false)
+            }
+
         }
 
         selectedMarker = chosenMarker
@@ -291,43 +302,53 @@ class MapFragment : Fragment() {
     }
 
     private fun addRealEstatesToMap(realEstates: List<RealEstate>) {
-        realEstates.forEach {
-            mapfitMap.addMarker(
-                it.address,
-                true,
-                onMarkerAddedCallback(it)
-            )
+        launch {
+            realEstates.forEach {
+                mapfitMap.addMarker(
+                    it.address,
+                    true,
+                    onMarkerAddedCallback(it)
+                )
+            }
         }
     }
 
     private fun onMarkerAddedCallback(realEstate: RealEstate): OnMarkerAddedCallback {
         return object : OnMarkerAddedCallback {
             override fun onMarkerAdded(marker: Marker) {
-                marker.setTitle("") // disables place info on click
-
                 realEstateHashMap[realEstate] = marker
-
-                launch(UI) {
-                    marker.setIcon(
-                        PriceMarkerBitmapDrawable(
-                            getContext()!!,
-                            realEstate.price,
-                            false
-                        )
-                    )
-
-                    marker.markerOptions.apply {
-                        width = 84
-                        height = 48
-                    }
-
-                    marker.buildingPolygon?.let { changePolygonState(it, false) }
-                }
+                initMarkerStyle(marker, realEstate)
             }
 
             override fun onError(exception: Exception) {
 
             }
+        }
+    }
+
+    private fun initMarkerStyle(
+        marker: Marker,
+        realEstate: RealEstate
+    ) {
+        marker.apply {
+            setTitle("") // disables place info on click
+
+            launch {
+                setIcon(
+                    PriceMarkerBitmapDrawable(
+                        this@MapFragment.context!!,
+                        realEstate.price,
+                        false
+                    )
+                )
+
+                markerOptions.apply {
+                    width = 84
+                    height = 48
+                }
+            }
+
+            buildingPolygon?.let { changePolygonState(it, false) }
         }
     }
 
