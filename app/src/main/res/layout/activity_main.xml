@@ -10,8 +10,10 @@
         android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="169dp"
-        tools:layout_editor_absoluteY="0dp">
+        android:background="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/textView"
@@ -78,10 +80,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="@string/select_a_neighborhood"
             android:fontFamily="@font/harmonia_semibd"
-            android:textColor="@color/txtColorSecondary"
-            android:textSize="12sp"
+            android:text="@string/select_a_neighborhood"
+            android:textColor="@color/txtColorPrimary"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@+id/txtCityName"
             app:layout_constraintStart_toEndOf="@+id/txtCityName"
             app:layout_constraintTop_toTopOf="@+id/txtCityName" />
@@ -95,10 +97,10 @@
             android:layout_marginEnd="8dp"
             android:background="@drawable/button_background"
             android:clickable="true"
-            android:fontFamily="@font/harmonia_semibd"
-
             android:drawableEnd="@drawable/ic_list_24dp"
+
             android:drawablePadding="8dp"
+            android:fontFamily="@font/harmonia_semibd"
             android:foreground="?attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:paddingBottom="4dp"
