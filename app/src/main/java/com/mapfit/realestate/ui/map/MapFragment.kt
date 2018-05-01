@@ -136,6 +136,8 @@ class MapFragment : Fragment() {
     }
 
     private fun initMap() {
+
+        mapfitMap.setTilt(40f)
         mapfitMap.apply {
             setZoom(12f, 500)
             setCenter(LatLng(lat = 40.73748242049333, lng = -73.95733284034074), 500)
@@ -352,7 +354,10 @@ class MapFragment : Fragment() {
                 }
             }
 
-            buildingPolygon?.let { changePolygonState(it, false) }
+            buildingPolygon?.let {
+                it.polygonOptions.drawOrder = 700
+                changePolygonState(it, false)
+            }
         }
     }
 
