@@ -389,11 +389,8 @@ class MapFragment : Fragment() {
         selectedPolygon = null
         neighborhoodHashMap.clear()
         realEstateHashMap.clear()
-    }
+        mapView?.onDestroy()
 
-    override fun onDestroy() {
-        super.onDestroy()
-        mapView.onDestroy()
     }
 
     override fun onLowMemory() {
