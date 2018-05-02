@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.mapfit.realestate.R
 import com.mapfit.realestate.model.Neighborhood
+import com.mapfit.realestate.ui.detail.RealEstateDetailFragment
 import com.mapfit.realestate.ui.list.RealEstateListFragment
 import com.mapfit.realestate.ui.map.MapFragment
 import com.mapfit.realestate.util.openProjectPage
@@ -37,15 +38,15 @@ class MainActivity : AppCompatActivity() {
 
         imgGithub.setOnClickListener { openProjectPage(this) }
 
-        btnMapList.setOnClickListener {
-            val newState = when (btnMapList.tag ?: ScreenState.MAP_VIEW) {
+        btnChangeScreen.setOnClickListener {
+            val newState = when (it.tag ?: ScreenState.MAP_VIEW) {
                 ScreenState.LIST_VIEW -> ScreenState.MAP_VIEW
                 ScreenState.MAP_VIEW -> ScreenState.LIST_VIEW
                 ScreenState.DETAIL_VIEW -> ScreenState.MAP_VIEW
                 else -> ScreenState.MAP_VIEW
             }
 
-            changeScreen(newState)
+            changeScreen(newState,true)
         }
 
         viewModel.neighborhoodEvent.observe(this, Observer {
@@ -53,17 +54,12 @@ class MainActivity : AppCompatActivity() {
         })
 
         viewModel.realEstateEvent.observe(this, Observer {
-            it?.let { changeScreen(ScreenState.DETAIL_VIEW) }
+            it?.let { changeScreen(ScreenState.DETAIL_VIEW, true) }
         })
 
         viewModel.backNavigationEvent.observe(this, Observer {
             it?.let {
                 onBackPressed()
-
-                when (navigationController.getCurrentFragment()) {
-                    is MapFragment -> changeScreen(ScreenState.MAP_VIEW)
-                    is RealEstateListFragment -> changeScreen(ScreenState.LIST_VIEW)
-                }
             }
         })
     }
@@ -73,25 +69,25 @@ class MainActivity : AppCompatActivity() {
      *
      * @param newState expected screen state
      */
-    private fun changeScreen(newState: ScreenState) {
+    private fun changeScreen(newState: ScreenState, navigate: Boolean) {
         val (newText, resourceId) = when (newState) {
             ScreenState.LIST_VIEW -> {
-                navigationController.openListView()
+                if (navigate) navigationController.openListView()
                 Pair(getString(R.string.map_view), R.drawable.ic_map_24dp)
             }
             ScreenState.MAP_VIEW -> {
-                navigationController.openMapView()
+                if (navigate) navigationController.openMapView()
                 Pair(getString(R.string.list_view), R.drawable.ic_list_24dp)
             }
             ScreenState.DETAIL_VIEW -> {
-                navigationController.openDetailView()
+                if (navigate) navigationController.openDetailView()
                 Pair("", 0)
             }
         }
 
         val isDetailState = newState == ScreenState.DETAIL_VIEW
 
-        btnMapList.apply {
+        btnChangeScreen.apply {
             visibility = if (isDetailState) View.GONE else View.VISIBLE
             tag = newState
             text = newText
@@ -119,7 +115,7 @@ class MainActivity : AppCompatActivity() {
             animate().alphaBy(1f).setDuration(200).start()
         }
 
-        btnMapList.apply {
+        btnChangeScreen.apply {
             visibility = View.VISIBLE
             animate().alphaBy(1f).setDuration(200).start()
         }
@@ -130,6 +126,11 @@ class MainActivity : AppCompatActivity() {
             finish()
         } else {
             super.onBackPressed()
+
+            when (navigationController.getCurrentFragment()) {
+                is MapFragment -> changeScreen(ScreenState.MAP_VIEW, false)
+                is RealEstateListFragment -> changeScreen(ScreenState.LIST_VIEW, false)
+            }
         }
     }
 }

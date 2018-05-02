@@ -1,5 +1,3 @@
-<img  src="/assets/readme-banner.png"/>
-
 # Aptfit Sample Project
 This sample project is made to demonstrate the usage of [Mapfit Android SDK](https://github.com/mapfit/android-sdk). The project replicates a real estate application.
 

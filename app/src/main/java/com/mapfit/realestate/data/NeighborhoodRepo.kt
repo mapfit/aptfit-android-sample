@@ -16,6 +16,9 @@ class NeighborhoodRepo {
 
     private val estateRepo = RealEstateRepo()
 
+    /**
+     * Returns list of Manhattan's neighborhoods region and real estates.
+     */
     fun getNeighborhoods(): LiveData<List<Neighborhood>> {
         val data = MutableLiveData<List<Neighborhood>>()
         launch {

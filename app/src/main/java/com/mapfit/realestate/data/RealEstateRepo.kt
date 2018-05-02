@@ -4,8 +4,10 @@ import com.mapfit.realestate.model.RealEstate
 
 class RealEstateRepo {
 
+    /**
+     * Returns sorted real estates for Manhattan.
+     */
     fun getRealEstates(): List<List<RealEstate>> {
-
         val allRealEstates = mutableListOf<List<RealEstate>>()
         allRealEstates.apply {
             add(littleItaly())

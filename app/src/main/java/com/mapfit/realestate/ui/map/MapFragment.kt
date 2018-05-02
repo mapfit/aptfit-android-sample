@@ -137,7 +137,6 @@ class MapFragment : Fragment() {
 
     private fun initMap() {
 
-        mapfitMap.setTilt(40f)
         mapfitMap.apply {
             setZoom(12f, 500)
             setCenter(LatLng(lat = 40.73748242049333, lng = -73.95733284034074), 500)
@@ -181,8 +180,6 @@ class MapFragment : Fragment() {
         val chosenMarker: Marker? = marker ?: realEstate?.let { getMarkerForRealEstate(it) }
         val estate: RealEstate? = realEstate ?: marker?.let { getRealEstateForMarker(it) }
 
-
-        // change the marker and building colors
         if (selectedMarker == null || selectedMarker != chosenMarker) {
             chosenMarker?.apply {
                 setIcon(PriceMarkerBitmapDrawable(activity!!, estate!!.price, true))
@@ -202,7 +199,6 @@ class MapFragment : Fragment() {
             }
         }
 
-
         // change recyclerview position to the selected marker's real estate
         selectedNeighborhood
             ?.takeIf { marker != null }
@@ -220,7 +216,6 @@ class MapFragment : Fragment() {
                     realEstateLayoutManager.scrollToPosition(position)
                 }
             }
-
 
         // set map center and zoom level
         if (!::selectionJob.isInitialized || selectionJob.isCompleted) {
@@ -310,6 +305,7 @@ class MapFragment : Fragment() {
     private fun addRealEstatesToMap(realEstates: List<RealEstate>) {
         launch {
             realEstates.forEach {
+
                 mapfitMap.addMarker(
                     it.address,
                     true,
@@ -394,8 +390,6 @@ class MapFragment : Fragment() {
         selectedPolygon = null
         neighborhoodHashMap.clear()
         realEstateHashMap.clear()
-        mapView?.onDestroy()
-
     }
 
     override fun onLowMemory() {

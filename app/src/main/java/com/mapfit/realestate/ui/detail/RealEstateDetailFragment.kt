@@ -70,7 +70,9 @@ class RealEstateDetailFragment : Fragment() {
     private fun initMap() {
         mapView.getMapAsync(onMapReadyCallback = object : OnMapReadyCallback {
             override fun onMapReady(mapfitMap: MapfitMap) {
-                loadTransitEnabledTheme(mapfitMap)
+
+                // broadcast mapfitMap instance
+                launch { mapChannel.send(mapfitMap) }
 
                 mapfitMap.getMapOptions().apply {
                     zoomControlsEnabled = true
@@ -81,14 +83,11 @@ class RealEstateDetailFragment : Fragment() {
         })
     }
 
-    private fun loadTransitEnabledTheme(mapfitMap: MapfitMap) = runBlocking {
-        mapChannel.send(mapfitMap)
-    }
-
     private fun displayRealEstate(realEstate: RealEstate) = launch(UI) {
         GlideApp.with(this@RealEstateDetailFragment)
             .load(realEstate.imageUrl)
             .into(imgHero)
+
         txtAddress.text = realEstate.address
         txtNeighborhood.text = realEstate.neighborhood
         txtPrice.text = realEstate.price
