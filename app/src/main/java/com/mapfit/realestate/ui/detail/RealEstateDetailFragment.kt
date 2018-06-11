@@ -11,6 +11,8 @@ import android.view.ViewGroup
 import com.mapfit.android.MapfitMap
 import com.mapfit.android.OnMapReadyCallback
 import com.mapfit.android.annotations.Marker
+import com.mapfit.android.annotations.MarkerOptions
+import com.mapfit.android.annotations.PolygonOptions
 import com.mapfit.android.annotations.callback.OnMarkerAddedCallback
 import com.mapfit.realestate.R
 import com.mapfit.realestate.model.Neighborhood
@@ -24,7 +26,6 @@ import kotlinx.android.synthetic.main.widget_mapfit_footer.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.channels.BroadcastChannel
 import kotlinx.coroutines.experimental.launch
-import kotlinx.coroutines.experimental.runBlocking
 
 class RealEstateDetailFragment : Fragment() {
 
@@ -68,19 +69,20 @@ class RealEstateDetailFragment : Fragment() {
     }
 
     private fun initMap() {
-        mapView.getMapAsync(onMapReadyCallback = object : OnMapReadyCallback {
-            override fun onMapReady(mapfitMap: MapfitMap) {
+        mapView.getMapAsync(customTheme = "mapfit-custom-day.yaml",
+            onMapReadyCallback = object : OnMapReadyCallback {
+                override fun onMapReady(mapfitMap: MapfitMap) {
 
-                // broadcast mapfitMap instance
-                launch { mapChannel.send(mapfitMap) }
+                    // broadcast mapfitMap instance
+                    launch { mapChannel.send(mapfitMap) }
 
-                mapfitMap.getMapOptions().apply {
-                    zoomControlsEnabled = true
-                    recenterButtonEnabled = true
-                    panEnabled = false
+                    mapfitMap.getMapOptions().apply {
+                        zoomControlsEnabled = true
+                        recenterButtonEnabled = true
+                        panEnabled = false
+                    }
                 }
-            }
-        })
+            })
     }
 
     private fun displayRealEstate(realEstate: RealEstate) = launch(UI) {
@@ -104,15 +106,16 @@ class RealEstateDetailFragment : Fragment() {
         val mapfitMap = mapChannel.openSubscription().receive()
 
         mapfitMap.addMarker(
-            realEstate.address,
-            true,
+            MarkerOptions()
+                .streetAddress(realEstate.address)
+                .addBuildingPolygon(true)
+            ,
             object : OnMarkerAddedCallback {
                 override fun onMarkerAdded(marker: Marker) {
-                    marker.setTitle("")
-                    mapfitMap.getMapOptions().customTheme = "mapfit-custom-day.yaml"
+                    marker.title = ""
 
                     mapfitMap.apply {
-                        setCenter(marker.getPosition(), 200)
+                        setCenter(marker.position, 200)
                         setZoom(18f, 200)
                     }
                 }
@@ -130,12 +133,12 @@ class RealEstateDetailFragment : Fragment() {
         mapChannel: BroadcastChannel<MapfitMap>
     ) {
         val mapfitMap = mapChannel.openSubscription().receive()
-        val neighborhoodPolygon = mapfitMap.addPolygon(neighborhood.polygon)
-
-        neighborhoodPolygon.polygonOptions.apply {
-            fillColor = getString(R.color.darkAccentTransparent)
-            strokeColor = getString(R.color.darkAccent)
-        }
+        mapfitMap.addPolygon(
+            PolygonOptions()
+                .points(neighborhood.polygon)
+                .fillColor(getString(R.color.darkAccentTransparent))
+                .strokeColor(getString(R.color.darkAccent))
+        )
     }
 
     override fun onLowMemory() {

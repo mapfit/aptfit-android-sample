@@ -15,7 +15,9 @@ import com.mapfit.android.MapTheme
 import com.mapfit.android.MapfitMap
 import com.mapfit.android.OnMapReadyCallback
 import com.mapfit.android.annotations.Marker
+import com.mapfit.android.annotations.MarkerOptions
 import com.mapfit.android.annotations.Polygon
+import com.mapfit.android.annotations.PolygonOptions
 import com.mapfit.android.annotations.callback.OnMarkerAddedCallback
 import com.mapfit.android.annotations.callback.OnMarkerClickListener
 import com.mapfit.android.annotations.callback.OnPolygonClickListener
@@ -224,7 +226,7 @@ class MapFragment : Fragment() {
                 mapfitMap.apply {
 
                     chosenMarker?.let {
-                        val center = computeOffsetToPoint(it.getPosition(), 55.0, 180.0)
+                        val center = computeOffsetToPoint(it.position, 55.0, 180.0)
                         setCenter(center, ANIMATION_DURATION)
                     }
                     setZoom(18f, ANIMATION_DURATION)
@@ -302,16 +304,23 @@ class MapFragment : Fragment() {
         return differentPolygons
     }
 
-    private fun addRealEstatesToMap(realEstates: List<RealEstate>) {
-        launch {
-            realEstates.forEach {
-
-                mapfitMap.addMarker(
-                    it.address,
-                    true,
-                    onMarkerAddedCallback(it)
-                )
-            }
+    private fun addRealEstatesToMap(realEstates: List<RealEstate>) = launch {
+        realEstates.forEach {
+            mapfitMap.addMarker(
+                MarkerOptions()
+                    .streetAddress(it.address)
+                    .icon(
+                        PriceMarkerBitmapDrawable(
+                            this@MapFragment.context!!,
+                            it.price,
+                            false
+                        )
+                    )
+                    .height(48)
+                    .width(84)
+                    .addBuildingPolygon(true),
+                onMarkerAddedCallback(it)
+            )
         }
     }
 
@@ -319,7 +328,7 @@ class MapFragment : Fragment() {
         return object : OnMarkerAddedCallback {
             override fun onMarkerAdded(marker: Marker) {
                 realEstateHashMap[realEstate] = marker
-                initMarkerStyle(marker, realEstate)
+                initMarkerStyle(marker)
             }
 
             override fun onError(exception: Exception) {
@@ -329,29 +338,12 @@ class MapFragment : Fragment() {
     }
 
     private fun initMarkerStyle(
-        marker: Marker,
-        realEstate: RealEstate
+        marker: Marker
     ) {
         marker.apply {
-            setTitle("") // disables place info on click
-
-            launch {
-                setIcon(
-                    PriceMarkerBitmapDrawable(
-                        this@MapFragment.context!!,
-                        realEstate.price,
-                        false
-                    )
-                )
-
-                markerOptions.apply {
-                    width = 84
-                    height = 48
-                }
-            }
+            title = "" // disables place info on click
 
             buildingPolygon?.let {
-                it.polygonOptions.drawOrder = 700
                 changePolygonState(it, false)
             }
         }
@@ -362,14 +354,14 @@ class MapFragment : Fragment() {
      */
     private fun addNeighborhoodsOnMap(neighborhoods: List<Neighborhood>) {
         neighborhoods.forEach {
-            val polygon = mapfitMap.addPolygon(it.polygon)
+            val polygon = mapfitMap.addPolygon(PolygonOptions().points(it.polygon))
             neighborhoodHashMap[it] = polygon
             changePolygonState(polygon, true)
         }
     }
 
     private fun changePolygonState(polygon: Polygon, blue: Boolean) {
-        polygon.polygonOptions.apply {
+        polygon.apply {
             fillColor = if (blue) {
                 getString(R.color.accentTransparent)
             } else {
