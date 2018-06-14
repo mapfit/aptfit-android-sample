@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.mapfit.realestate.R
-import com.mapfit.realestate.model.RealEstate
 import com.mapfit.realestate.ui.common.RealEstateAdapter
 import com.mapfit.realestate.ui.main.MainViewModel
 import com.mapfit.realestate.util.openProjectPage

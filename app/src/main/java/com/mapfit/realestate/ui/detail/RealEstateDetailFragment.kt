@@ -77,9 +77,8 @@ class RealEstateDetailFragment : Fragment() {
                     launch { mapChannel.send(mapfitMap) }
 
                     mapfitMap.getMapOptions().apply {
-                        zoomControlsEnabled = true
-                        recenterButtonEnabled = true
-                        panEnabled = false
+                        isZoomControlVisible = true
+                        isPanEnabled = false
                     }
                 }
             })

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.LinearSnapHelper
 import android.support.v7.widget.RecyclerView
@@ -37,7 +36,7 @@ import kotlinx.coroutines.experimental.delay
 import kotlinx.coroutines.experimental.launch
 
 @SuppressLint("ResourceType")
-class MapFragment : Fragment() {
+class MapFragment : android.support.v4.app.Fragment() {
 
     companion object {
         private const val ANIMATION_DURATION = 250L
@@ -81,7 +80,6 @@ class MapFragment : Fragment() {
         mapView.getMapAsync(MapTheme.MAPFIT_GRAYSCALE, object : OnMapReadyCallback {
             override fun onMapReady(mapfitMap: MapfitMap) {
                 this@MapFragment.mapfitMap = mapfitMap
-
                 initMap()
 
                 if (neighborhoods.isEmpty()) {
@@ -221,7 +219,6 @@ class MapFragment : Fragment() {
 
         // set map center and zoom level
         if (!::selectionJob.isInitialized || selectionJob.isCompleted) {
-
             selectionJob = launch {
                 mapfitMap.apply {
 
@@ -273,7 +270,7 @@ class MapFragment : Fragment() {
 
                 mapfitMap.apply {
                     neighborhoodHashMap[neighborhood]?.let {
-                        setLatLngBounds(it.getLatLngBounds(), 0.8f)
+                        setLatLngBounds(it.getLatLngBounds(), 0.8f, 300)
                     }
                 }
 
@@ -318,7 +315,13 @@ class MapFragment : Fragment() {
                     )
                     .height(48)
                     .width(84)
-                    .addBuildingPolygon(true),
+                    .addBuildingPolygon(
+                        true,
+                        PolygonOptions()
+                            .drawOrder(700)
+                            .fillColor(getString(R.color.darkAccentTransparent))
+                            .strokeColor(getString(R.color.darkAccent))
+                    ),
                 onMarkerAddedCallback(it)
             )
         }
@@ -327,8 +330,8 @@ class MapFragment : Fragment() {
     private fun onMarkerAddedCallback(realEstate: RealEstate): OnMarkerAddedCallback {
         return object : OnMarkerAddedCallback {
             override fun onMarkerAdded(marker: Marker) {
+                marker.title = "" // disables place info on click
                 realEstateHashMap[realEstate] = marker
-                initMarkerStyle(marker)
             }
 
             override fun onError(exception: Exception) {
@@ -337,24 +340,14 @@ class MapFragment : Fragment() {
         }
     }
 
-    private fun initMarkerStyle(
-        marker: Marker
-    ) {
-        marker.apply {
-            title = "" // disables place info on click
-
-            buildingPolygon?.let {
-                changePolygonState(it, false)
-            }
-        }
-    }
-
-    /**
-     * Adds neighborhood polygons on the map.
-     */
     private fun addNeighborhoodsOnMap(neighborhoods: List<Neighborhood>) {
         neighborhoods.forEach {
-            val polygon = mapfitMap.addPolygon(PolygonOptions().points(it.polygon))
+            val polygon = mapfitMap.addPolygon(
+                PolygonOptions()
+                    .points(it.polygon)
+                    .fillColor(getString(R.color.accentTransparent))
+                    .strokeColor(getString(R.color.colorAccent))
+            )
             neighborhoodHashMap[it] = polygon
             changePolygonState(polygon, true)
         }
