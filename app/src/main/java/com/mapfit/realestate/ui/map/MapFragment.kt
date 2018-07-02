@@ -136,9 +136,8 @@ class MapFragment : android.support.v4.app.Fragment() {
     }
 
     private fun initMap() {
-
         mapfitMap.apply {
-            setZoom(12f, 500)
+            setZoom(12f)
             setCenter(LatLng(lat = 40.73748242049333, lng = -73.95733284034074), 500)
 
             setOnPolygonClickListener(object : OnPolygonClickListener {
@@ -270,7 +269,7 @@ class MapFragment : android.support.v4.app.Fragment() {
 
                 mapfitMap.apply {
                     neighborhoodHashMap[neighborhood]?.let {
-                        setLatLngBounds(it.getLatLngBounds(), 0.8f, 300)
+                        setLatLngBounds(it.getLatLngBounds(), 0.4f, 300)
                     }
                 }
 
