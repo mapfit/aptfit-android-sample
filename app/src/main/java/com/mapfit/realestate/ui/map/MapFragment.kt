@@ -137,8 +137,8 @@ class MapFragment : android.support.v4.app.Fragment() {
 
     private fun initMap() {
         mapfitMap.apply {
-            setZoom(12f)
-            setCenter(LatLng(lat = 40.73748242049333, lng = -73.95733284034074), 500)
+            setZoom(11.4f)
+            setCenter(LatLng(lat = 40.767103935007, lng = -73.95601282006518))
 
             setOnPolygonClickListener(object : OnPolygonClickListener {
                 override fun onPolygonClicked(selectedPolygon: Polygon) {
